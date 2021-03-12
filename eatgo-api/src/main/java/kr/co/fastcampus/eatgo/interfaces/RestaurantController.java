@@ -1,5 +1,6 @@
 package kr.co.fastcampus.eatgo.interfaces;
 
+import kr.co.fastcampus.eatgo.application.RestaurantService;
 import kr.co.fastcampus.eatgo.domain.MenuItem;
 import kr.co.fastcampus.eatgo.domain.MenuItemRepository;
 import kr.co.fastcampus.eatgo.domain.Restaurant;
@@ -14,25 +15,17 @@ import java.util.List;
 @RestController
 public class RestaurantController {
 
-    @Autowired // Controller 생성 -> Spring -> Repository 생성
-    private RestaurantRepository restaurantRepository;
-
     @Autowired
-    private MenuItemRepository menuItemRepository;
+    private RestaurantService restaurantService;
 
     @GetMapping("/restaurants")
     public List<Restaurant> list(){
-        return restaurantRepository.findAll();
+        return restaurantService.getRestaurants();
     }
 
     @GetMapping("/restaurants/{id}")
     public Restaurant detail(@PathVariable("id")Long id){
-        Restaurant restaurant = restaurantRepository.findById(id);
-        List<MenuItem> menuItems = menuItemRepository.findAllByRestaurantId(id);
-
-        restaurant.setMenuItems(menuItems);
-
-        return restaurant;
+        return restaurantService.getRestaurant(id);
     }
 
 
