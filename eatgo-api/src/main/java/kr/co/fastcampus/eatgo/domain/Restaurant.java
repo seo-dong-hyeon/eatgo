@@ -4,10 +4,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Restaurant {
-    private final Long id;
-    private final String name;
-    private final String address;
+    private Long id;
+    private String name;
+    private String address;
     private List<MenuItem> menuItems = new ArrayList<MenuItem>();
+
+    // Controller POST -> RequestBody에서 아무것도 없는 객체 생성
+    public Restaurant(){
+
+    }
+
+    public Restaurant(String name, String address) {
+        this.name = name;
+        this.address = address;
+    }
 
     public Restaurant(Long id, String name, String address) {
         this.id = id;
@@ -37,6 +47,10 @@ public class Restaurant {
 
     public void addMenuItem(MenuItem menuItem) {
         menuItems.add(menuItem);
+    }
+
+    public void setId(long id){
+        this.id = id;
     }
 
     public void setMenuItems(List<MenuItem> menuItems) {
