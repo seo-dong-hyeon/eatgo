@@ -9,6 +9,7 @@ import org.springframework.boot.test.mock.mockito.SpyBean;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
@@ -40,7 +41,7 @@ public class RestaurantServiceTests {
         Restaurant restaurant = new Restaurant(1004L,"bob","seoul");
         restaurants.add(new Restaurant(1004L,"bob","seoul"));
 
-        given(restaurantRepository.findById(1004L)).willReturn(restaurant);
+        given(restaurantRepository.findById(1004L)).willReturn(Optional.of(restaurant));
         given(restaurantRepository.findAll()).willReturn(restaurants);
     }
 

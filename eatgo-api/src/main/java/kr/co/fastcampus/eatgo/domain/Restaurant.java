@@ -1,12 +1,22 @@
 package kr.co.fastcampus.eatgo.domain;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Transient;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
 public class Restaurant {
+
+    @Id
+    @GeneratedValue
     private Long id;
     private String name;
     private String address;
+
+    @Transient // 임시 처리
     private List<MenuItem> menuItems = new ArrayList<MenuItem>();
 
     // Controller POST -> RequestBody에서 아무것도 없는 객체 생성
