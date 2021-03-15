@@ -2,20 +2,18 @@ package kr.co.fastcampus.eatgo.domain;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Transient;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:8080")
+@CrossOrigin
 @Entity
 public class Restaurant {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy= GenerationType.AUTO)
     private Long id;
+
     private String name;
     private String address;
 
@@ -70,5 +68,10 @@ public class Restaurant {
         for(MenuItem menuItem : menuItems){
             addMenuItem(menuItem);
         }
+    }
+
+    public void updateInfo(String name, String address) {
+        this.name = name;
+        this.address = address;
     }
 }

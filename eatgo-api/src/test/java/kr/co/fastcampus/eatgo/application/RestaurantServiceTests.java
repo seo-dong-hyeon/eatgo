@@ -76,4 +76,14 @@ public class RestaurantServiceTests {
         assertThat(created.getId(),is(1234L));
     }
 
+    @Test
+    public void updateRestaurant(){
+        Restaurant restaurant = new Restaurant(1004L,"beryong","busan");
+
+        given(restaurantRepository.findById(1004L)).willReturn(Optional.of(restaurant));
+        restaurantService.updateResturant(1004L,"joker","japan");
+
+        assertThat(restaurant.getName(),is("joker"));
+    }
+
 }
