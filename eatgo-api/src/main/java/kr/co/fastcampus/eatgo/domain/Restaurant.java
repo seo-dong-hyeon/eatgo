@@ -12,6 +12,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@CrossOrigin
 public class Restaurant {
 
     @Id
