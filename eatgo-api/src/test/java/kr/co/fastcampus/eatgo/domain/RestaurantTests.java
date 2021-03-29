@@ -1,10 +1,9 @@
 package kr.co.fastcampus.eatgo.domain;
 
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.Test;
+import org.junit.Test;
 
 import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
 
 public class RestaurantTests {
 
