@@ -1,14 +1,13 @@
 package kr.co.fastcampus.eatgo.domain;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.validation.Valid;
-import javax.validation.constraints.NotEmpty;
 
 @Entity
 @Getter
@@ -30,6 +29,7 @@ public class Restaurant {
     private String address;
 
     @Transient // 임시 처리
+    @JsonInclude(JsonInclude.Include.NON_NULL) // NULL이 아닐 때만 표시
     private List<MenuItem> menuItems;
 
     public void setMenuItems(List<MenuItem> menuItems) {
