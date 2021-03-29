@@ -3,6 +3,7 @@ package kr.co.fastcampus.eatgo.interfaces;
 import kr.co.fastcampus.eatgo.application.RestaurantService;
 import kr.co.fastcampus.eatgo.domain.MenuItem;
 import kr.co.fastcampus.eatgo.domain.Restaurant;
+import kr.co.fastcampus.eatgo.domain.RestaurantNotFoundException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,20 +53,22 @@ public class RestaurantControllerTests {
     }
 
     @Test
-    public void detail() throws Exception {
+    public void detailWithExisted() throws Exception {
         Restaurant restaurant1 = Restaurant.builder()
                 .id(1004L)
                 .name("bob")
                 .address("seoul")
                 .build();
-        restaurant1.setMenuItems(Arrays.asList(MenuItem.builder()
-                .name("kimchi").build()));
+        restaurant1.setMenuItems(Arrays.asList(MenuItem.builder().name("kimchi").build()));
+
         given(restaurantService.getRestaurant(1004L)).willReturn(restaurant1);
+
         mvc.perform(get("/restaurants/1004"))
                 .andExpect(status().isOk())
                 .andExpect(content().string(containsString("\"id\":1004")))
                 .andExpect(content().string(containsString("\"name\":\"bob\"")))
                 .andExpect(content().string(containsString("kimchi")));
+
 
         Restaurant restaurant2 = Restaurant.builder()
                 .id(2020L)
@@ -73,11 +76,23 @@ public class RestaurantControllerTests {
                 .address("seoul")
                 .build();
         given(restaurantService.getRestaurant(2020L)).willReturn(restaurant2);
+
         mvc.perform(get("/restaurants/2020"))
                 .andExpect(status().isOk())
                 .andExpect(content().string(containsString("\"id\":2020")))
                 .andExpect(content().string(containsString("\"name\":\"cyber\"")));
     }
+
+    @Test
+    public void detailWithNotExisted() throws Exception {
+        given(restaurantService.getRestaurant(404L))
+                .willThrow(new RestaurantNotFoundException(404L));
+
+        mvc.perform(get("/restaurants/404"))
+                .andExpect(status().isNotFound())
+                .andExpect(content().string("{}"));
+    }
+
 
     @Test
     public void createWithValidData() throws Exception {
