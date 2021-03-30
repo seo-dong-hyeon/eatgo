@@ -15,6 +15,5 @@ public class RestaurantErrorAdvice {
     @ExceptionHandler(RestaurantNotFoundException.class)
     public String handleNotFound(){
         return "{}";
-
     }
 }

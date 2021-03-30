@@ -39,7 +39,7 @@ public class RestaurantService {
     }
 
     @Transactional // 객체 변경 -> DB 반영
-    public Restaurant updateResturant(Long id, String name, String address) {
+    public Restaurant updateRestaurant(Long id, String name, String address) {
         Restaurant restaurant = restaurantRepository.findById(id).orElse(null);
         restaurant.updateInfo(name,address);
 

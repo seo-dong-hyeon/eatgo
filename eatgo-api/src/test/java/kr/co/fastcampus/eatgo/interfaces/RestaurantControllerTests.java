@@ -129,7 +129,7 @@ public class RestaurantControllerTests {
                 .content("{\"name\":\"joker\",\"address\":\"japan\"}"))
                 .andExpect(status().isOk());
 
-        verify(restaurantService).updateResturant(1004L,"joker","japan");
+        verify(restaurantService).updateRestaurant(1004L,"joker","japan");
     }
 
     @Test

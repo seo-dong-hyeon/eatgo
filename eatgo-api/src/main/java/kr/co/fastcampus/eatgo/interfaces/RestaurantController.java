@@ -4,7 +4,6 @@ import kr.co.fastcampus.eatgo.application.RestaurantService;
 import kr.co.fastcampus.eatgo.domain.Restaurant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -41,7 +40,7 @@ public class RestaurantController {
 
     @PatchMapping("/restaurants/{id}")
     public String update(@PathVariable("id")Long id, @Valid @RequestBody Restaurant resource){
-        restaurantService.updateResturant(id, resource.getName(), resource.getAddress());
+        restaurantService.updateRestaurant(id, resource.getName(), resource.getAddress());
         return "{}";
     }
 }

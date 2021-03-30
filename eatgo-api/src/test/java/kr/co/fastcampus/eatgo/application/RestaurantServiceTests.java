@@ -99,9 +99,9 @@ public class RestaurantServiceTests {
                 .name("beryong")
                 .address("busan")
                 .build();
-
         given(restaurantRepository.findById(1004L)).willReturn(Optional.of(restaurant));
-        restaurantService.updateResturant(1004L,"joker","japan");
+
+        restaurantService.updateRestaurant(1004L,"joker","japan");
 
         assertThat(restaurant.getName(),is("joker"));
     }
