@@ -93,7 +93,6 @@ public class RestaurantControllerTests {
                 .andExpect(content().string("{}"));
     }
 
-
     @Test
     public void createWithValidData() throws Exception {
         given(restaurantService.addRestaurant(any())).will(invocation -> {
