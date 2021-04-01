@@ -20,6 +20,7 @@ import java.util.List;
 import static org.hamcrest.core.StringContains.containsString;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -95,14 +96,16 @@ public class RestaurantControllerTests {
 
     @Test
     public void createWithValidData() throws Exception {
-        given(restaurantService.addRestaurant(any())).will(invocation -> {
+        /*given(restaurantService.addRestaurant(any())).will(invocation -> {
             Restaurant restaurant = invocation.getArgument(0);
             return Restaurant.builder()
                     .id(1234L)
                     .name(restaurant.getName())
                     .address(restaurant.getAddress())
                     .build();
-        });
+        });*/
+        given(restaurantService.addRestaurant(any()))
+                .willReturn(Restaurant.builder().id(1234L).build());
 
         mvc.perform(post("/restaurants")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -119,6 +122,8 @@ public class RestaurantControllerTests {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{\"name\":\"\",\"address\":\"\"}"))
                 .andExpect(status().isBadRequest());
+
+        verify(restaurantService, never()).addRestaurant(any());
     }
 
     @Test

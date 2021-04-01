@@ -76,17 +76,18 @@ public class RestaurantServiceTests {
 
     @Test
     public void addRestaurant(){
-        given(restaurantRepository.save(any())).will(invocation -> {
+        /*given(restaurantRepository.save(any())).will(invocation -> {
             Restaurant restaurant = invocation.getArgument(0);
             restaurant.setId(1234L);
             return restaurant;
-        });
+        });*/
+        given(restaurantRepository.save(any()))
+                .willReturn(Restaurant.builder().id(1234L).build());
 
         Restaurant restaurant = Restaurant.builder()
                 .name("beryong")
                 .address("busan")
                 .build();
-
         Restaurant created = restaurantService.addRestaurant(restaurant);
 
         assertThat(created.getId(),is(1234L));

@@ -29,11 +29,12 @@ public class RestaurantController {
 
     @PostMapping("/restaurants")
     public ResponseEntity<?> create(@Valid @RequestBody Restaurant resource) throws URISyntaxException {
-        Restaurant restaurant = restaurantService.addRestaurant(
+        /*Restaurant restaurant = restaurantService.addRestaurant(
                 Restaurant.builder()
                         .name(resource.getName())
                         .address(resource.getAddress())
-                        .build());
+                        .build());*/
+        Restaurant restaurant = restaurantService.addRestaurant(resource);
 
         return ResponseEntity.created(new URI("/restaurant/" + restaurant.getId())).body("");
     }
