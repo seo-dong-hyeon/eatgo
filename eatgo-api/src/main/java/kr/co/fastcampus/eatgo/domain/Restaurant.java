@@ -32,9 +32,17 @@ public class Restaurant {
     @JsonInclude(JsonInclude.Include.NON_NULL) // NULL이 아닐 때만 표시
     private List<MenuItem> menuItems;
 
+    @Transient // 임시 처리
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private List<Review> reviews;
+
     public void setMenuItems(List<MenuItem> menuItems) {
         //this.menuItems = menuItems;
         this.menuItems = new ArrayList<>(menuItems);
+    }
+
+    public void setReviews(List<Review> reviews) {
+        this.reviews = new ArrayList<>(reviews);
     }
 
     public void updateInfo(String name, String address) {

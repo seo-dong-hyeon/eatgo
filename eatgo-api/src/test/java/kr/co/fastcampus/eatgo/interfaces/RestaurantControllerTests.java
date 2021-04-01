@@ -4,6 +4,7 @@ import kr.co.fastcampus.eatgo.application.RestaurantService;
 import kr.co.fastcampus.eatgo.domain.MenuItem;
 import kr.co.fastcampus.eatgo.domain.Restaurant;
 import kr.co.fastcampus.eatgo.domain.RestaurantNotFoundException;
+import kr.co.fastcampus.eatgo.domain.Review;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,33 +56,23 @@ public class RestaurantControllerTests {
 
     @Test
     public void detailWithExisted() throws Exception {
-        Restaurant restaurant1 = Restaurant.builder()
+        Restaurant restaurant = Restaurant.builder()
                 .id(1004L)
                 .name("bob")
                 .address("seoul")
                 .build();
-        restaurant1.setMenuItems(Arrays.asList(MenuItem.builder().name("kimchi").build()));
+        restaurant.setMenuItems(Arrays.asList(MenuItem.builder().name("kimchi").build()));
+        restaurant.setReviews(Arrays.asList(
+                Review.builder().name("joker").score(0).description("fuck").build()));
 
-        given(restaurantService.getRestaurant(1004L)).willReturn(restaurant1);
+        given(restaurantService.getRestaurant(1004L)).willReturn(restaurant);
 
         mvc.perform(get("/restaurants/1004"))
                 .andExpect(status().isOk())
                 .andExpect(content().string(containsString("\"id\":1004")))
                 .andExpect(content().string(containsString("\"name\":\"bob\"")))
-                .andExpect(content().string(containsString("kimchi")));
-
-
-        Restaurant restaurant2 = Restaurant.builder()
-                .id(2020L)
-                .name("cyber")
-                .address("seoul")
-                .build();
-        given(restaurantService.getRestaurant(2020L)).willReturn(restaurant2);
-
-        mvc.perform(get("/restaurants/2020"))
-                .andExpect(status().isOk())
-                .andExpect(content().string(containsString("\"id\":2020")))
-                .andExpect(content().string(containsString("\"name\":\"cyber\"")));
+                .andExpect(content().string(containsString("kimchi")))
+                .andExpect(content().string(containsString("fuck")));
     }
 
     @Test

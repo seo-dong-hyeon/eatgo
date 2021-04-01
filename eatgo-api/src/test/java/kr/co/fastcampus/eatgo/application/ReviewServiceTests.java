@@ -36,7 +36,7 @@ public class ReviewServiceTests {
                 .score(3)
                 .description("good")
                 .build();
-        Review created = reviewService.addReview(review);
+        Review created = reviewService.addReview(123L, review);
 
         verify(reviewRepository).save(any());
         assertThat(created.getId(),is(123L));
