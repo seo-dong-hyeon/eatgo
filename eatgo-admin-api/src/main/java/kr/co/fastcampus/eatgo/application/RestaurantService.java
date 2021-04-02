@@ -13,30 +13,13 @@ public class RestaurantService {
     @Autowired
     private RestaurantRepository restaurantRepository;
 
-    @Autowired
-    private MenuItemRepository menuItemRepository;
-
-    @Autowired
-    private ReviewRepository reviewRepository;
-
-    public RestaurantService(RestaurantRepository restaurantRepository,
-                             MenuItemRepository menuItemRepository,
-                             ReviewRepository reviewRepository) {
+    public RestaurantService(RestaurantRepository restaurantRepository) {
         this.restaurantRepository = restaurantRepository;
-        this.menuItemRepository = menuItemRepository;
-        this.reviewRepository = reviewRepository;
     }
 
     public Restaurant getRestaurant(Long id){
         Restaurant restaurant = restaurantRepository.findById(id)
                 .orElseThrow(()->new RestaurantNotFoundException(id)); // () -> 여기 해당될 때만 처리
-
-        List<MenuItem> menuItems = menuItemRepository.findAllByRestaurantId(id);
-        List<Review> reviews = reviewRepository.findAllByRestaurantId(id);
-
-        restaurant.setMenuItems(menuItems);
-        restaurant.setReviews(reviews);
-
         return restaurant;
     }
 

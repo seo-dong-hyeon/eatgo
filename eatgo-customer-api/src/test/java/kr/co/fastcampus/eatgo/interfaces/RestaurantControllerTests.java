@@ -1,10 +1,8 @@
 package kr.co.fastcampus.eatgo.interfaces;
 
 import kr.co.fastcampus.eatgo.application.RestaurantService;
-import kr.co.fastcampus.eatgo.domain.MenuItem;
 import kr.co.fastcampus.eatgo.domain.Restaurant;
 import kr.co.fastcampus.eatgo.domain.RestaurantNotFoundException;
-import kr.co.fastcampus.eatgo.domain.Review;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +13,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.hamcrest.core.StringContains.containsString;
@@ -61,18 +58,13 @@ public class RestaurantControllerTests {
                 .name("bob")
                 .address("seoul")
                 .build();
-        restaurant.setMenuItems(Arrays.asList(MenuItem.builder().name("kimchi").build()));
-        restaurant.setReviews(Arrays.asList(
-                Review.builder().name("joker").score(0).description("fuck").build()));
 
         given(restaurantService.getRestaurant(1004L)).willReturn(restaurant);
 
         mvc.perform(get("/restaurants/1004"))
                 .andExpect(status().isOk())
                 .andExpect(content().string(containsString("\"id\":1004")))
-                .andExpect(content().string(containsString("\"name\":\"bob\"")))
-                .andExpect(content().string(containsString("kimchi")))
-                .andExpect(content().string(containsString("fuck")));
+                .andExpect(content().string(containsString("\"name\":\"bob\"")));
     }
 
     @Test
@@ -87,14 +79,6 @@ public class RestaurantControllerTests {
 
     @Test
     public void createWithValidData() throws Exception {
-        /*given(restaurantService.addRestaurant(any())).will(invocation -> {
-            Restaurant restaurant = invocation.getArgument(0);
-            return Restaurant.builder()
-                    .id(1234L)
-                    .name(restaurant.getName())
-                    .address(restaurant.getAddress())
-                    .build();
-        });*/
         given(restaurantService.addRestaurant(any()))
                 .willReturn(Restaurant.builder().id(1234L).build());
 

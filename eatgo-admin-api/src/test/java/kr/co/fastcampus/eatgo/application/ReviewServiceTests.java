@@ -8,6 +8,9 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -28,18 +31,13 @@ public class ReviewServiceTests {
     }
 
     @Test
-    public void addReview(){
-        given(reviewRepository.save(any())).willReturn(Review.builder().id(123L).build());
+    public void getReviews(){
+        List<Review> mockReviews = new ArrayList<>();
+        mockReviews.add(Review.builder().description("good!").build());
+        given(reviewRepository.findAll()).willReturn(mockReviews);
 
-        Review review = Review.builder()
-                .name("joker")
-                .score(3)
-                .description("good")
-                .build();
-        Review created = reviewService.addReview(123L, review);
+        List<Review> reviews = reviewService.getReviews();
 
-        verify(reviewRepository).save(any());
-        assertThat(created.getId(),is(123L));
+        assertThat(reviews.get(0).getDescription(),is("good!"));
     }
-
 }

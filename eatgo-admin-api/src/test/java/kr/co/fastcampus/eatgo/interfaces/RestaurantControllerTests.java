@@ -61,18 +61,13 @@ public class RestaurantControllerTests {
                 .name("bob")
                 .address("seoul")
                 .build();
-        restaurant.setMenuItems(Arrays.asList(MenuItem.builder().name("kimchi").build()));
-        restaurant.setReviews(Arrays.asList(
-                Review.builder().name("joker").score(0).description("fuck").build()));
 
         given(restaurantService.getRestaurant(1004L)).willReturn(restaurant);
 
         mvc.perform(get("/restaurants/1004"))
                 .andExpect(status().isOk())
                 .andExpect(content().string(containsString("\"id\":1004")))
-                .andExpect(content().string(containsString("\"name\":\"bob\"")))
-                .andExpect(content().string(containsString("kimchi")))
-                .andExpect(content().string(containsString("fuck")));
+                .andExpect(content().string(containsString("\"name\":\"bob\"")));
     }
 
     @Test
@@ -87,14 +82,6 @@ public class RestaurantControllerTests {
 
     @Test
     public void createWithValidData() throws Exception {
-        /*given(restaurantService.addRestaurant(any())).will(invocation -> {
-            Restaurant restaurant = invocation.getArgument(0);
-            return Restaurant.builder()
-                    .id(1234L)
-                    .name(restaurant.getName())
-                    .address(restaurant.getAddress())
-                    .build();
-        });*/
         given(restaurantService.addRestaurant(any()))
                 .willReturn(Restaurant.builder().id(1234L).build());
 
