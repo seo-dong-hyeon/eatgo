@@ -27,5 +27,4 @@ public class ReviewController {
         return ResponseEntity.created(new URI("/restaurants/" + restaurantId + "/reviews/" + review.getId()))
                 .body("{}");
     }
-
 }
